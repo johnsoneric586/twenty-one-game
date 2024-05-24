@@ -3,9 +3,16 @@ body {
   padding: 0;
   height: 100vh;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   background-color: rgb(0, 119, 182);
+  position: relative;
+}
+
+h1 {
+  margin-top: 0;
+  font-size: 3em;
 }
 
 .main {
@@ -92,8 +99,74 @@ body {
   transform: translateX(-50%);
 }
 
+#overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(3px);
+}
+
+#modal {
+  height: 70%;
+  width: 70%;
+  background-color: white;
+  top: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  position: absolute;
+  border-radius: 20px;
+}
+
+#close-modal {
+  position: absolute;
+  top: 1em;
+  right: 1em;
+  height: 2em;
+  width: 2em;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+#close-modal:hover {
+  transform: scale(1.1);
+}
+
+#line1 {
+  position: absolute;
+  background-color: black;
+  width: 0.25em;
+  height: 100%;
+  transform: rotate(45deg);
+}
+
+#line2 {
+  position: absolute;
+  background-color: black;
+  width: 0.25em;
+  height: 100%;
+  transform: rotate(-45deg);
+}
+
+#modal h2 {
+  font-size: 3em;
+  text-align: center;
+}
+
+#rules {
+  padding: 2em 4em;
+  font-size: 1.5em;
+  line-height: 2;
+}
+
 /* Utility classes */
 .active-player {
-  background-color: green;
+  background-color: rgba(119, 141, 169, 0.8);
   /* TODO pick a better color for active player - just wanted to test to make sure it was working. */
+}
+
+.hidden {
+  display: none;
 }

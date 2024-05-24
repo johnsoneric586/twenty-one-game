@@ -8,6 +8,7 @@
     <script src="script.js"></script>
   </head>
   <body>
+    <h1>TwentyOne!</h1>
     <div class="main">
       <div id="player1-container" class="player active-player">
         <h2 class="player-title">Player 1</h2>
@@ -27,7 +28,7 @@
           <p class="current-score" id="player-1-current-score">5</p>
         </div>
 
-        <button id="new-game" class="game-button">New Game</button>
+        <button id="new-game" class="game-button">New Game 🔄</button>
 
         <img id="dice-image" src="assets/dice-two-svgrepo-com.svg" alt="Dice" />
 
@@ -36,6 +37,20 @@
           <button class="game-button" id="hold">Hold 🛑</button>
         </div>
       </div>
+    </div>
+
+    <div id="overlay"></div>
+    <div id="modal">
+      <div id="close-modal">
+        <div id="line1"></div>
+        <div id="line2"></div>
+      </div>
+      <h2>How to play</h2>
+      <p id="rules">
+        Roll the dice. Try to get as close to 21 as you can. If your "current
+        score" exceeds 21, you earn no points. If you select "hold", your points
+        are saved to your total score. First player to 100 wins!
+      </p>
     </div>
   </body>
 </html>
