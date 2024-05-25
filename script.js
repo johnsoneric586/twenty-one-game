@@ -23,8 +23,7 @@ const btnHold = document.getElementById('hold');
 // ----- Regular Variables -----
 let player1TotalScore;
 let player2TotalScore;
-let player1CurrentScore = [];
-let player2CurrentScore = [];
+let currentScore = [];
 
 let dice;
 let roll;
@@ -44,31 +43,56 @@ function openModal() {
 function newGame() {
   player1TotalScore = 0;
   player2TotalScore = 0;
-  player1CurrentScore = [0];
-  player2CurrentScore = [0];
+  currentScore = [0];
 
   player1TotalScoreEl.textContent = player1TotalScore;
-  player1CurrentScoreEl.textContent = player1CurrentScore;
+  player1CurrentScoreEl.textContent = currentScore;
 
   player2TotalScoreEl.textContent = player2TotalScore;
-  player2CurrentScoreEl.textContent = player2CurrentScore;
+  player2CurrentScoreEl.textContent = currentScore;
 }
+
+function switchPlayer() {
+  if (activePlayer === 1) {
+    activePlayer = 2;
+  } else {
+    activePlayer = 1;
+  }
+}
+
+// TODO SOME ISSUE WITH ACTIVE PLAYER TRANSFER AND CURRENT SCORE NOT STOPPING RIGHT BEFORE 21 IS EXCEEDED
 
 function rollDice() {
   roll = Math.trunc(Math.random() * 6) + 1;
   diceImageEl.src = `assets/dice-${roll}-svgrepo-com.svg`;
 
-  player1CurrentScore.push(roll);
-  player1CurrentScoreEl.textContent = player1CurrentScore.reduce(function (
-    acc,
-    curr
+  if (
+    currentScore.reduce((accumulator, current) => accumulator + current, 0) <=
+    21
   ) {
-    return acc + curr;
-  },
-  0);
+    currentScore.push(roll);
 
-  //   TODO NEED TO FIGURE OUT HOW TO USE THE "ACTIVE PLAYER" SO THE PLAYER ISN'T FIXED
-  //   WATCH JONAS VIDEO
+    if (activePlayer === 1) {
+      (player1CurrentScoreEl.textContent = currentScore.reduce(
+        (accumulator, current) => {
+          return accumulator + current;
+        }
+      )),
+        0;
+    } else if (activePlayer === 2) {
+      (player2CurrentScoreEl.textContent = currentScore.reduce(
+        (accumulator, current) => {
+          return accumulator + current;
+        }
+      )),
+        0;
+    }
+  } else if (
+    currentScore.reduce((accumulator, current) => accumulator + current, 0) > 21
+  ) {
+    currentScore = [0];
+    switchPlayer();
+  }
 }
 
 // ---------- Event Listeners ----------
