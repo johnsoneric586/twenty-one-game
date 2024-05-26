@@ -24,13 +24,14 @@ const btnRoll = document.getElementById('roll');
 const btnHold = document.getElementById('hold');
 
 // ----- Regular Variables -----
-let player1TotalScore;
-let player2TotalScore;
+let player1TotalScore = 0;
+let player2TotalScore = 0;
 let currentScore = [];
 
 let dice;
 let roll;
 let activePlayer = 1;
+let holdValue;
 
 // ---------- Functions ----------
 function closeModal() {
@@ -44,18 +45,32 @@ function openModal() {
 }
 
 function newGame() {
-  player1TotalScore = 0;
-  player2TotalScore = 0;
+  player1TotalScore = [0];
+  player2TotalScore = [0];
   currentScore = [0];
 
-  player1TotalScoreEl.textContent = player1TotalScore;
+  player1TotalScoreEl.textContent = player1TotalScore.reduce(
+    (accumulator, current) => {
+      return accumulator + current;
+    },
+    0
+  );
+
   player1CurrentScoreEl.textContent = currentScore;
 
-  player2TotalScoreEl.textContent = player2TotalScore;
+  player2TotalScoreEl.textContent = player2TotalScore.reduce(
+    (accumulator, current) => {
+      return accumulator + current;
+    },
+    0
+  );
+
   player2CurrentScoreEl.textContent = currentScore;
 }
 
 function switchPlayer() {
+  currentScore = [0];
+
   if (activePlayer === 1) {
     activePlayer = 2;
     containerPlayer1.classList.remove('active-player');
@@ -109,6 +124,24 @@ function rollDice() {
   }
 }
 
+function hold() {
+  if (activePlayer === 1) {
+    player1TotalScore += currentScore.reduce((accumulator, current) => {
+      return accumulator + current;
+    }, 0);
+
+    player1TotalScoreEl.textContent = player1TotalScore;
+  } else if (activePlayer === 2) {
+    player2TotalScore += currentScore.reduce((accumulator, current) => {
+      return accumulator + current;
+    }, 0);
+
+    player2TotalScoreEl.textContent = player2TotalScore;
+  }
+
+  switchPlayer();
+}
+
 // ---------- Event Listeners ----------
 
 // Closing the modal
@@ -130,3 +163,6 @@ btnNewGame.addEventListener('click', newGame);
 
 // Rolling dice
 btnRoll.addEventListener('click', rollDice);
+
+// Clicking "hold"
+btnHold.addEventListener('click', hold);
