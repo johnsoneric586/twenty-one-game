@@ -12,6 +12,9 @@ const player2TotalScoreEl = document.getElementById('player-2-total-score');
 const player1CurrentScoreEl = document.getElementById('player-1-current-score');
 const player2CurrentScoreEl = document.getElementById('player-2-current-score');
 
+const containerPlayer1 = document.getElementById('player1-container');
+const containerPlayer2 = document.getElementById('player2-container');
+
 const diceImageEl = document.getElementById('dice-image');
 
 // ----- Buttons -----
@@ -55,43 +58,54 @@ function newGame() {
 function switchPlayer() {
   if (activePlayer === 1) {
     activePlayer = 2;
+    containerPlayer1.classList.remove('active-player');
+    containerPlayer2.classList.add('active-player');
+    player1CurrentScoreEl.textContent = '0';
   } else {
     activePlayer = 1;
+    containerPlayer2.classList.remove('active-player');
+    containerPlayer1.classList.add('active-player');
+    player2CurrentScoreEl.textContent = '0';
   }
 }
 
-// TODO SOME ISSUE WITH ACTIVE PLAYER TRANSFER AND CURRENT SCORE NOT STOPPING RIGHT BEFORE 21 IS EXCEEDED
+function checkCurrentScore() {
+  if (
+    currentScore.reduce((accumulator, current) => {
+      return accumulator + current;
+    }, 0) > 21
+  ) {
+    currentScore = [0];
+    switchPlayer();
+  }
+}
 
 function rollDice() {
   roll = Math.trunc(Math.random() * 6) + 1;
   diceImageEl.src = `assets/dice-${roll}-svgrepo-com.svg`;
 
-  if (
-    currentScore.reduce((accumulator, current) => accumulator + current, 0) <=
-    21
-  ) {
-    currentScore.push(roll);
+  // Add the roll to the currentScore
+  currentScore.push(roll);
 
-    if (activePlayer === 1) {
-      (player1CurrentScoreEl.textContent = currentScore.reduce(
-        (accumulator, current) => {
-          return accumulator + current;
-        }
-      )),
-        0;
-    } else if (activePlayer === 2) {
-      (player2CurrentScoreEl.textContent = currentScore.reduce(
-        (accumulator, current) => {
-          return accumulator + current;
-        }
-      )),
-        0;
-    }
-  } else if (
-    currentScore.reduce((accumulator, current) => accumulator + current, 0) > 21
-  ) {
-    currentScore = [0];
-    switchPlayer();
+  // Check the current score before updating the DOM
+  checkCurrentScore();
+
+  // If current score is still less than 21, update the DOM
+
+  if (activePlayer === 1) {
+    player1CurrentScoreEl.textContent = currentScore.reduce(
+      (accumulator, current) => {
+        return accumulator + current;
+      },
+      0
+    );
+  } else {
+    player2CurrentScoreEl.textContent = currentScore.reduce(
+      (accumulator, current) => {
+        return accumulator + current;
+      },
+      0
+    );
   }
 }
 
