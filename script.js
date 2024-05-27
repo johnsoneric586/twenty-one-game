@@ -24,6 +24,7 @@ const btnRules = document.getElementById('btn-rules');
 const btnNewGame = document.getElementById('new-game');
 const btnRoll = document.getElementById('roll');
 const btnHold = document.getElementById('hold');
+const btnWinnerNewGame = document.getElementById('btn-new-game-winner-modal');
 
 // ----- Regular Variables -----
 let player1TotalScore = 0;
@@ -47,27 +48,20 @@ function openModal() {
 }
 
 function newGame() {
-  player1TotalScore = [0];
-  player2TotalScore = [0];
+  activePlayer = 1;
+  containerPlayer1.classList.add('active-player');
+  containerPlayer2.classList.remove('active-player');
+  player1TotalScore = 0;
+  player2TotalScore = 0;
   currentScore = [0];
 
-  player1TotalScoreEl.textContent = player1TotalScore.reduce(
-    (accumulator, current) => {
-      return accumulator + current;
-    },
-    0
-  );
-
+  player1TotalScoreEl.textContent = player1TotalScore;
   player1CurrentScoreEl.textContent = currentScore;
 
-  player2TotalScoreEl.textContent = player2TotalScore.reduce(
-    (accumulator, current) => {
-      return accumulator + current;
-    },
-    0
-  );
-
+  player2TotalScoreEl.textContent = player2TotalScore;
   player2CurrentScoreEl.textContent = currentScore;
+
+  winnerModal.classList.add('hidden');
 }
 
 function checkForWinner() {
@@ -183,3 +177,6 @@ btnRoll.addEventListener('click', rollDice);
 
 // Clicking "hold"
 btnHold.addEventListener('click', hold);
+
+// Clicking "new game" from within the winner modal
+btnWinnerNewGame.addEventListener('click', newGame);
