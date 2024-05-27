@@ -65,7 +65,7 @@ function newGame() {
 }
 
 function checkForWinner() {
-  if (player1TotalScore >= 30 || player2TotalScore >= 30) {
+  if (player1TotalScore >= 100 || player2TotalScore >= 100) {
     winnerModal.classList.remove('hidden');
   }
 
