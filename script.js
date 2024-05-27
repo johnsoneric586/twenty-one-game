@@ -17,6 +17,8 @@ const containerPlayer2 = document.getElementById('player2-container');
 
 const diceImageEl = document.getElementById('dice-image');
 
+const winnerModal = document.getElementById('winner-modal');
+const winnerNumber = document.getElementById('winner-number');
 // ----- Buttons -----
 const btnRules = document.getElementById('btn-rules');
 const btnNewGame = document.getElementById('new-game');
@@ -66,6 +68,18 @@ function newGame() {
   );
 
   player2CurrentScoreEl.textContent = currentScore;
+}
+
+function checkForWinner() {
+  if (player1TotalScore >= 30 || player2TotalScore >= 30) {
+    winnerModal.classList.remove('hidden');
+  }
+
+  if (activePlayer === 1) {
+    winnerNumber.textContent = '1';
+  } else if (activePlayer === 2) {
+    winnerNumber.textContent = '2';
+  }
 }
 
 function switchPlayer() {
@@ -124,6 +138,8 @@ function rollDice() {
   }
 }
 
+// TODO Need to build out the logic for when a player's total score exceeds or meets the winning amount, then I'll show the winner modal and allow the player to click new game.
+
 function hold() {
   if (activePlayer === 1) {
     player1TotalScore += currentScore.reduce((accumulator, current) => {
@@ -139,6 +155,7 @@ function hold() {
     player2TotalScoreEl.textContent = player2TotalScore;
   }
 
+  checkForWinner();
   switchPlayer();
 }
 
