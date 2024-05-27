@@ -20,7 +20,7 @@ h1 {
   width: 80%;
   display: flex;
   position: relative;
-  background-color: rgb(0, 180, 216);
+  background-color: rgba(119, 141, 169, 0.8);
 }
 
 .player {
@@ -190,8 +190,7 @@ h1 {
 
 /* ---------- Utility classes ---------- */
 .active-player {
-  background-color: rgba(119, 141, 169, 0.8);
-  /* TODO pick a better color for active player - just wanted to test to make sure it was working. */
+  background-color: rgb(0, 180, 216);
 }
 
 .hidden {

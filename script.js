@@ -132,8 +132,6 @@ function rollDice() {
   }
 }
 
-// TODO Need to build out the logic for when a player's total score exceeds or meets the winning amount, then I'll show the winner modal and allow the player to click new game.
-
 function hold() {
   if (activePlayer === 1) {
     player1TotalScore += currentScore.reduce((accumulator, current) => {
